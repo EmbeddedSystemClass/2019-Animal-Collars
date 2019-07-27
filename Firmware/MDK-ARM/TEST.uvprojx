@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32L071xx,STM32L071xx,USE_FULL_LL_DRIVER,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,MSI_VALUE=262144,HSI_VALUE=16000000,LSI_VALUE=37000,VDD_VALUE=3300,PREFETCH_ENABLE=0,INSTRUCTION_CACHE_ENABLE=1,DATA_CACHE_ENABLE=1</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;  ../Drivers/STM32L0xx_HAL_Driver/Inc;  ../Drivers/CMSIS/Device/ST/STM32L0xx/Include;  ../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc;   ../Drivers/STM32L0xx_HAL_Driver/Inc;   ../Drivers/CMSIS/Device/ST/STM32L0xx/Include;   ../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -471,6 +471,16 @@
               <FileName>xbee.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\xbee.c</FilePath>
+            </File>
+            <File>
+              <FileName>lowpower.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\lowpower.c</FilePath>
+            </File>
+            <File>
+              <FileName>lowpower.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Inc\lowpower.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>

@@ -21,5 +21,4 @@ test/stm32l0xx_it.o: ..\Src\stm32l0xx_it.c ..\Inc\main.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_tim.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_usart.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_gpio.h \
-  ..\Inc\stm32l0xx_it.h ..\Inc\globals.h ..\Inc\comport.h ..\Inc\xbee.h \
-  ..\Inc\timers.h ..\Inc\gps.h
+  ..\Inc\stm32l0xx_it.h
