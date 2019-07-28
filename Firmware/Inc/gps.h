@@ -84,7 +84,7 @@ void clearGPSBuffer(void);
 
 int GPS_UBX_enablePUBX_Position(void);
 
-struct GPS_POS GPS_getNMEA(void);
+struct GPS_POS GPS_getNMEA(struct GPS_POS position);
 
 int GPS_subroutine(void);
 

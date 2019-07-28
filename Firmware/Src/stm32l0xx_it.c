@@ -21,6 +21,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32l0xx_it.h"
+#include "globals.h"
+#include "comport.h"
+#include "xbee.h"
+#include "timers.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -168,13 +172,16 @@ void USART4_5_IRQHandler(void)
 {
   /* USER CODE BEGIN USART4_5_IRQn 0 */
 	//LL_USART_TransmitData8(USART2, LPUART1->RDR);
+	
+#ifdef __LARGE_COLLAR_
 	XbeeRxBuff[XbeeRxWriteIndex] = USART4->RDR;
 	XbeeRxWriteIndex = (XbeeRxWriteIndex + 1) % BUFFER_SIZE;
 	XbeeRxBufferActive = YES;
+#endif
   /* USER CODE END USART4_5_IRQn 0 */
   
   /* USER CODE BEGIN USART4_5_IRQn 1 */
-
+	
   /* USER CODE END USART4_5_IRQn 1 */
 }
 

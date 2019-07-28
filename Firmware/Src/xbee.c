@@ -4,6 +4,8 @@
 * with a researchers computer via the xbee device onboard
 ****************************************************/
 
+#ifdef __LARGE_COLLAR_
+
 //Includes
 #include "comport.h"
 #include "globals.h"
@@ -12,6 +14,7 @@
 #include <string.h>
 #include "xbee.h"
 #include "timers.h"
+#include "lowpower.h"
 
 //Software init
 char XbeeRxBuff[BUFFER_SIZE];	//Ring bufer for raw input
@@ -25,6 +28,10 @@ int XB_XbeeSubroutine()
 {
 	//Enable XBee
 	XB_EnableXbee();	
+	
+	// Enable USART4:
+	USART4->CR1 |= USART_CR1_UE;
+	
 	
 	// Start Timeout timer
 	// Delay is in ms 
@@ -66,6 +73,8 @@ int XB_XbeeSubroutine()
 	}//While not connection request timeout
 		
 	XbeeDongleConnected = NO;
+	// Disable USART4:
+	USART4->CR1 &= ~USART_CR1_UE;
 	XB_DisableXbee();
 	return 0;//Maybe do something here for flag checking 
 }
@@ -83,8 +92,17 @@ void XB_DisableXbee()
 //---------------------------------------------------
 int XB_SendByte(char byte)
 {
+	// Enable TX Complete Interrupt
+	//USART4->CR1 |= LL_USART_CR1_TCIE;
+	
 	LL_USART_TransmitData8(USART4, byte);
 	while(!((USART4->ISR & LL_USART_ISR_TC) == LL_USART_ISR_TC));
+	/*
+	if( !((USART4->ISR & LL_USART_ISR_TC) == LL_USART_ISR_TC) ){
+		LPM_sleep();
+	}
+	*/
+
 	return 0;
 }
 //---------------------------------------------------	
@@ -461,5 +479,7 @@ void VHF_DisableVHF()
 	VHF_EN_GPIO_Port->ODR |= VHF_EN_Pin;
 	return;
 }
+
+#endif
 //---------------------------------------------------
 /*--EOF--*/

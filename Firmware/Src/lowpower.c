@@ -1,23 +1,47 @@
 
+#include "lowpower.h"
 #include "globals.h"
 #include "main.h"
 #include "gps.h"
 #include "xbee.h"
 
+int LPM_sleep(void){
+		
+	SCB->SCR &= ~SCR_DEEPSLEEP; // Enable deep sleep feature
 
-int LPM_stopMode(void){
+	//PWR->CR  &= ~PWR_CR_PDDS; 	//Only relevant when DEEPSLEEP = 1
+	PWR->CSR &= ~PWR_CSR_WUF;
+	
+	__WFI();
+	
+	return 0;
+}
+int LPM_stop(void){
 	
 	GPS_GPSDisable();
+#ifdef __LARGE_COLLAR_	
 	VHF_DisableVHF();
 	XB_DisableXbee();
+#endif
+	// Disable SPI:
+	SPI1->CR1 &= ~SPI_CR1_SPE; 
+	// Disable USART1:
+	USART1->CR1 &= ~USART_CR1_UE;
+	// Disable USART4:
+	USART4->CR1 &= ~USART_CR1_UE;
 	
-		
 	
-	
-	SCB->SCR |= 1<<2; // Enable deep sleep feature
+	SCB->SCR |= SCR_DEEPSLEEP; 	// Enable deep sleep feature
 
-	PWR->CR  &= ~PWR_CR_PDDS;
-	PWR->CSR &= ~PWR_CSR_WUF;
+	PWR->CR  &= ~PWR_CR_PDDS;		// Enter Stop mode when Deepsleep is entered
+	PWR->CSR &= ~PWR_CSR_WUF;		// Clear wakup flag
+	
+#ifdef __PRODUCTION_	
+	__WFI();	// Wait for interrupt
+#endif	
+	
+	// Enable USART1:
+	USART1->CR1 |= USART_CR1_UE;
 	
 	return 0;
 }
@@ -45,16 +69,13 @@ int LPM_gpioInit(void){
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_12;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	
-	GPIO_InitStruct.Pin = LL_GPIO_PIN_15;
-  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-	
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_0;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	
-	GPIOA -> ODR |= ( LL_GPIO_PIN_2 | LL_GPIO_PIN_4 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12 | LL_GPIO_PIN_15);
+	GPIOA -> ODR &= ~( LL_GPIO_PIN_2 | LL_GPIO_PIN_4 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12 | LL_GPIO_PIN_15);
 
 	return 0;	
 };

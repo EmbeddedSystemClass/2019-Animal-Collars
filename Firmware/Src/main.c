@@ -16,36 +16,21 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
+#include "comport.h"
+#include "globals.h"
+#include "flash.h"
+#include "xbee.h"
+#include "timers.h"
+#include "scheduler.h"
+#include "lowpower.h"
+#include <string.h>
 /* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
+int checkSchedule = 0;
+int GPS_active = 0;
+int XB_VHF_active = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -55,67 +40,128 @@ static void MX_SPI1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART4_UART_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
+//Begin main
+//------------------------------------------------------------------------------
 int main(void)
-{
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-  
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  
-
+	{
+  //-- Initial MCU Configuration------------------------------------------------
+  // Reset of all peripherals, Initializes the Flash interface and the Systick. 
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
-  /* System interrupt init*/
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
+  // Configure the system clock 
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
+	
+	__disable_irq();
+  // Initialize all configured peripherals 
   MX_GPIO_Init();
   MX_RTC_Init();
+	RTC_initAlarm();
   MX_SPI1_Init();
   MX_TIM2_Init();
   MX_USART1_UART_Init();
+	// Set up interrupts for the UART coms
+	LL_USART_Disable(USART1);
+	USART1->CR1 |= USART_CR1_RXNEIE;
+	LL_USART_Enable(USART1);
+		
+#ifdef __LARGE_COLLAR_	
   MX_USART4_UART_Init();
-  /* USER CODE BEGIN 2 */
+	LL_USART_Disable(USART4);
+	USART4->CR1 |= USART_CR1_RXNEIE;
+	LL_USART_Enable(USART4);
+#endif
+	
+	// Enable these interrupts
+	__enable_irq();	
+		
+	// Init timers and alarms
+	
+	TIM2_init();
+	
+	//This small delay initializes the delay for further use
+	TIM2_delay(1);
+	
+	//Ensure all devices are off
+	GPS_GPSDisable();
+	GPS_GPSCSHigh();
+#ifdef __LARGE_COLLAR_
+	XB_DisableXbee();
+	VHF_DisableVHF();
+#endif
+	
+	// Set unused pins low
+	LPM_gpioInit();
+	
+	//-----------------
+	// Main Variables
+	// These vars are used as flags for the scheduler
+	int GPS_active 	= 0;
+	int XB_VHF_active 	= 0;
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+#ifndef __PRODUCTION_
+	FLASH_Unlock();
+	EEPROM_WriteByte(0x0A, 0x08080004);
+	FLASH_Lock();
+#endif
+	
+	//End of initialization, begin while loop
+	//------------------------------------------------------------------------------
   while (1)
   {
-    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+		//Check for com port connected (should be while to hold device in this state)
+		//----------------------------
+		if(CC_ComPortPresent())
+		{
+			
+			//Check for handshake from GUI
+			if(CC_CheckForHandshake())
+			{
+				//Handshake completed, look for command, execute commands and loop
+				while (CC_ComPortPresent())
+				{
+					CC_ExecuteCommand(CC_ParseCommand());
+					break;
+				}//While present 
+			}//Check handshake	
+
+			
+		}//Comport present 
+		//Logic low hall effect sensor, this means no mag is present
+		if( (MAG_SENSE_GPIO_Port->IDR & MAG_SENSE_Pin) != 0 )
+		{
+			if( checkSchedule == 1){		
+				scheduler( &GPS_active, &XB_VHF_active );
+				checkSchedule = 0;
+			}
+			if(GPS_active)
+			{
+				GPS_subroutine();
+				GPS_active = 0;
+			}
+#ifdef __LARGE_COLLAR_			
+			if(XB_VHF_active)
+			{
+				XB_XbeeSubroutine();
+				VHF_EnableVHF();
+				//May need to set sleep mode in a way that it will not disable this reg
+			}
+			else
+			{
+				VHF_DisableVHF();
+			}
+#endif			
+		}//Mag sense pin check
+		else
+		{
+			LPM_stop();
+			//__sleep() etc maybe ensure devices are disabled as well
+		}
+
   }
-  /* USER CODE END 3 */
 }
 
 /**
@@ -269,7 +315,7 @@ static void MX_SPI1_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* SPI1 interrupt Init */
-  NVIC_SetPriority(SPI1_IRQn, 0);
+  NVIC_SetPriority(SPI1_IRQn, -5);
   NVIC_EnableIRQ(SPI1_IRQn);
 
   /* USER CODE BEGIN SPI1_Init 1 */
@@ -315,7 +361,7 @@ static void MX_TIM2_Init(void)
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
 
   /* TIM2 interrupt Init */
-  NVIC_SetPriority(TIM2_IRQn, 0);
+  NVIC_SetPriority(TIM2_IRQn, -6);
   NVIC_EnableIRQ(TIM2_IRQn);
 
   /* USER CODE BEGIN TIM2_Init 1 */
@@ -377,7 +423,7 @@ static void MX_USART1_UART_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USART1 interrupt Init */
-  NVIC_SetPriority(USART1_IRQn, 0);
+  NVIC_SetPriority(USART1_IRQn, -7);
   NVIC_EnableIRQ(USART1_IRQn);
 
   /* USER CODE BEGIN USART1_Init 1 */
@@ -391,6 +437,7 @@ static void MX_USART1_UART_Init(void)
   USART_InitStruct.HardwareFlowControl = LL_USART_HWCONTROL_NONE;
   USART_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
   LL_USART_Init(USART1, &USART_InitStruct);
+  LL_USART_DisableOverrunDetect(USART1);
   LL_USART_ConfigAsyncMode(USART1);
   LL_USART_Enable(USART1);
   /* USER CODE BEGIN USART1_Init 2 */
@@ -440,7 +487,7 @@ static void MX_USART4_UART_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USART4 interrupt Init */
-  NVIC_SetPriority(USART4_5_IRQn, 0);
+  NVIC_SetPriority(USART4_5_IRQn, -3);
   NVIC_EnableIRQ(USART4_5_IRQn);
 
   /* USER CODE BEGIN USART4_Init 1 */
@@ -458,6 +505,7 @@ static void MX_USART4_UART_Init(void)
   LL_USART_ConfigAsyncMode(USART4);
   LL_USART_Enable(USART4);
   /* USER CODE BEGIN USART4_Init 2 */
+	
 
   /* USER CODE END USART4_Init 2 */
 
@@ -543,6 +591,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   LL_GPIO_Init(USB_PRSNT_GPIO_Port, &GPIO_InitStruct);
+	
+	/**/
+  GPIO_InitStruct.Pin = LOW_BATT_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(LOW_BATT_GPIO_Port, &GPIO_InitStruct);
 
 }
 

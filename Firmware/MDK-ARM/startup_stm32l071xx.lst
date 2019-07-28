@@ -384,8 +384,8 @@ ARM Macro Assembler    Page 6
               00000000 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0+ --depend=tes
-t\startup_stm32l071xx.d -otest\startup_stm32l071xx.o -I.\RTE\_TEST -IC:\Users\C
-ollin\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Users\Col
+t\startup_stm32l071xx.d -otest\startup_stm32l071xx.o -I.\RTE\_TEST -IC:\Users\c
+ollin\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include -IC:\Users\col
 lin\AppData\Local\Arm\Packs\Keil\STM32L0xx_DFP\2.0.1\Drivers\CMSIS\Device\ST\ST
 M32L0xx\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION 
 

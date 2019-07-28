@@ -10,6 +10,7 @@
 #include "main.h"
 #include "flash.h"
 #include <string.h>
+#include <stdio.h>
 #include "xbee.h"
 //Software init
 	char ComRxBuff[BUFFER_SIZE];	//Ring bufer for raw input
@@ -140,6 +141,7 @@ int CC_ExecuteCommand(int command)
 		case GETPGM_N:
 			return CC_ReadProgram();
 			break;
+#ifdef __LARGE_COLLAR_		
 		case CONFIGXBEE_N:
 			return CC_ConfigureXbee();
 			break;
@@ -149,6 +151,7 @@ int CC_ExecuteCommand(int command)
 		case GETSN_N:
 			return XB_GetSN();
 			break;
+#endif		
 		case ERSFLASH_N:
 			return FLASH_initDataStorage();
 		case DOWNLOAD_N:
@@ -324,6 +327,7 @@ int CC_ReadProgram()
 	return 0;
 }
 //---------------------------------------------------
+#ifdef __LARGE_COLLAR_
 int CC_ConfigureXbee()
 {	
 	char str[MAX_PGM_LEN];
@@ -349,6 +353,7 @@ int CC_ConfigureXbee()
 	
 	return XB_ConfigureDevice(str, strlen(str));	
 }
+#endif
 //---------------------------------------------------
 int CC_DownloadFixes()
 {
@@ -392,5 +397,5 @@ int CC_DownloadFixes()
 	}
 	CC_SendByte(EOC);
 	
-	
-}
+	return 0;
+}	

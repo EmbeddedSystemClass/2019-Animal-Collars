@@ -1,9 +1,9 @@
-test/lowpower.o: ..\Src\lowpower.c ..\Inc\globals.h ..\Inc\main.h \
-  ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_crs.h \
+test/lowpower.o: ..\Src\lowpower.c ..\Inc\lowpower.h ..\Inc\globals.h \
+  ..\Inc\main.h ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_crs.h \
   ..\Drivers\CMSIS\Device\ST\STM32L0xx\Include\stm32l0xx.h \
   ..\Drivers\CMSIS\Device\ST\STM32L0xx\Include\stm32l071xx.h \
   ..\Drivers\CMSIS\Include\core_cm0plus.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   ..\Drivers\CMSIS\Include\core_cmInstr.h \
   ..\Drivers\CMSIS\Include\cmsis_armcc_V6.h \
   ..\Drivers\CMSIS\Include\core_cmFunc.h \

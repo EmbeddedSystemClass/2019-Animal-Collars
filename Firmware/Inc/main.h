@@ -90,6 +90,8 @@ void Error_Handler(void);
 #define MAG_SENSE_GPIO_Port GPIOB
 #define USB_PRSNT_Pin LL_GPIO_PIN_7
 #define USB_PRSNT_GPIO_Port GPIOB
+#define LOW_BATT_Pin LL_GPIO_PIN_15
+#define LOW_BATT_GPIO_Port GPIOA
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */
@@ -103,6 +105,13 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
+
+// Uncomment to enable large collar features:
+// #define __LARGE_COLLAR_
+
+// Uncomment to enable production features:
+// #define __PRODUCTION_
+
 
 /* USER CODE END Private defines */
 

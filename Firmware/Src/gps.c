@@ -294,7 +294,7 @@ void clearGPSBuffer(void){
 }
 */
 //---------------------------------------------------
-struct GPS_POS GPS_getNMEA(void){
+struct GPS_POS GPS_getNMEA(struct GPS_POS position){
 	// End goal here is to only parse RMC data. However, it currently just prints whatever
 	// Sentance it reads. 
 
@@ -310,9 +310,9 @@ struct GPS_POS GPS_getNMEA(void){
 	char accTemp[ACC_TEMP_SIZE];
 	char checksum[2];
 	uint8_t msgComplete = 0;
-	static struct GPS_POS position;
-		memset(&position, 0, sizeof(position));
-	position.acc = 99999;
+	//static struct GPS_POS position;
+	//	memset(&position, 0, sizeof(position));
+	//position.acc = 99999;
 	int i, count = 0, nextIndex = 0, lastIndex = 0;
 
 
@@ -358,7 +358,8 @@ struct GPS_POS GPS_getNMEA(void){
 				if( rxData == (char)0xFF ){
 					// if not, go back to state 1:
 					state = 1;
-				}else if( rxData != (char)0xFF ); //LL_USART_TransmitData8( USART1, rxData );
+				}else if( rxData != (char)0xFF )
+				; //LL_USART_TransmitData8( USART1, rxData );
 				// IF it is:
 				if( rxBuffer[index] == '*' ){
 					LL_SPI_TransmitData8( SPI1, 0x00 );
@@ -401,10 +402,10 @@ struct GPS_POS GPS_getNMEA(void){
 			case 5:
 				// ---- NMEA PARSE STATE ---
 				// We successfully read a full sentence! Theoretically.
-			
+#ifndef __PRODUCTION_			
 				// For debugging, send the string to UART before it's messed with
 				CC_SendData( rxBuffer, sizeof(rxBuffer) );
- 				
+#endif 				
 			// Parse PUBX,00 to read time, fix & accuracy data:
 				if(rxBuffer[0] == 'P' && rxBuffer[1] == 'U' && rxBuffer[2] == 'B'){
 					
@@ -439,9 +440,8 @@ struct GPS_POS GPS_getNMEA(void){
 							break;
 						};
 					}					
-				}
-				// Parse RMC to get date:
-				if(rxBuffer[0] == 'G' && rxBuffer[1] == 'N' && rxBuffer[2] == 'R' && rxBuffer[3] == 'M'){
+					// Parse RMC to get date:
+				}else if(rxBuffer[0] == 'G' && rxBuffer[1] == 'N' && rxBuffer[2] == 'R' && rxBuffer[3] == 'M'){
 					for(i=0; i<strlen(rxBuffer);i++)
 					{
 						if(rxBuffer[i] == ',')
@@ -484,7 +484,7 @@ int GPS_UBX_enablePUBX_Position(void){
 }
 //---------------------------------------------------
 int GPS_subroutine(void){
-	static struct GPS_POS position;
+	struct GPS_POS position;
 		memset(&position, 0, sizeof(position));
 		position.acc = 99999;
 	LL_RTC_TimeTypeDef time;
@@ -493,16 +493,24 @@ int GPS_subroutine(void){
 	
 	
 	GPS_GPSEnable();
+	// Enable SPI:
+	SPI1->CR1 |= SPI_CR1_SPE; 
 	GPS_GPSCSHigh();
 	TIM2_delay(150);
 	GPS_GPSCSLow();
 	TIM2_delay(500);
 	GPS_UBX_enablePUBX_Position();
 	
+	
+	int temp = 0;
 	TIM2_initDelay_inline( GPS_TIMEOUT );
-	while( !(TIM2->SR & TIM_SR_UIF) &&  (position.acc > GPS_ACC_REQ) ){
-		position = GPS_getNMEA();
+	while( ((TIM2->SR & TIM_SR_UIF) == 0) && (position.acc > GPS_ACC_REQ) || (position.date[4] == 0) ){
+		position = GPS_getNMEA(position);
 	}
+	
+	// Disable SPI:
+	SPI1->CR1 &= ~SPI_CR1_SPE; 
+	GPS_GPSDisable();
 	
 	if(position.acc > GPS_ACC_REQ){
 		validFix = 0;
