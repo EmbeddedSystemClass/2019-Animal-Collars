@@ -1982,46 +1982,46 @@ Image Symbol Table
     __arm_cp.0_2                             0x08003d84   Number         4  main.o(.text.main)
     __arm_cp.0_3                             0x08003d88   Number         4  main.o(.text.main)
     [Anonymous Symbol]                       0x08003d8c   Section        0  scheduler.o(.text.scheduler)
-    __arm_cp.0_0                             0x08003f54   Number         4  scheduler.o(.text.scheduler)
-    __arm_cp.0_1                             0x08003f58   Number         4  scheduler.o(.text.scheduler)
-    __arm_cp.0_2                             0x08003f5c   Number         4  scheduler.o(.text.scheduler)
-    __arm_cp.0_3                             0x08003f60   Number         4  scheduler.o(.text.scheduler)
-    __arm_cp.0_4                             0x08003f64   Number         4  scheduler.o(.text.scheduler)
-    __arm_cp.0_5                             0x08003f68   Number         4  scheduler.o(.text.scheduler)
-    __arm_cp.0_6                             0x08003f6c   Number         4  scheduler.o(.text.scheduler)
-    i.__0sprintf                             0x08003f70   Section        0  printfa.o(i.__0sprintf)
-    i.__ARM_clz                              0x08003f98   Section        0  depilogue.o(i.__ARM_clz)
-    i.__aeabi_errno_addr                     0x08003fc8   Section        0  errno.o(i.__aeabi_errno_addr)
-    i.__scatterload_copy                     0x08003fd0   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x08003fde   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08003fe0   Section       14  handlers.o(i.__scatterload_zeroinit)
-    _fp_digits                               0x08003ff1   Thumb Code   344  printfa.o(i._fp_digits)
-    i._fp_digits                             0x08003ff0   Section        0  printfa.o(i._fp_digits)
-    _printf_core                             0x08004165   Thumb Code  1754  printfa.o(i._printf_core)
-    i._printf_core                           0x08004164   Section        0  printfa.o(i._printf_core)
-    _printf_post_padding                     0x08004851   Thumb Code    32  printfa.o(i._printf_post_padding)
-    i._printf_post_padding                   0x08004850   Section        0  printfa.o(i._printf_post_padding)
-    _printf_pre_padding                      0x08004871   Thumb Code    44  printfa.o(i._printf_pre_padding)
-    i._printf_pre_padding                    0x08004870   Section        0  printfa.o(i._printf_pre_padding)
-    _sputc                                   0x0800489d   Thumb Code    10  printfa.o(i._sputc)
-    i._sputc                                 0x0800489c   Section        0  printfa.o(i._sputc)
-    .constdata                               0x080048a6   Section      129  ctype_o.o(.constdata)
-    table                                    0x08004928   Data           4  ctype_o.o(.constdata)
-    .constdata                               0x08004928   Section        4  ctype_o.o(.constdata)
-    .L.str.9                                 0x0800494d   Data           5  comport.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800494d   Section        0  comport.o(.rodata.str1.1)
-    .L.str.5                                 0x08004952   Data           5  comport.o(.rodata.str1.1)
-    .L.str.6                                 0x08004957   Data           5  comport.o(.rodata.str1.1)
-    .L.str.4                                 0x0800495c   Data           5  comport.o(.rodata.str1.1)
-    .L.str                                   0x08004961   Data           5  comport.o(.rodata.str1.1)
-    .L.str.2                                 0x08004966   Data           5  comport.o(.rodata.str1.1)
-    .L.str.7                                 0x0800496b   Data           5  comport.o(.rodata.str1.1)
-    .L.str.3                                 0x08004970   Data           5  comport.o(.rodata.str1.1)
-    .L.str.8                                 0x08004975   Data           5  comport.o(.rodata.str1.1)
-    .L.str.1                                 0x0800497a   Data           5  comport.o(.rodata.str1.1)
-    .L.str.10                                0x0800497f   Data          15  comport.o(.rodata.str1.1)
-    .L.str                                   0x0800498e   Data           2  gps.o(.rodata.str1.1)
-    [Anonymous Symbol]                       0x0800498e   Section        0  gps.o(.rodata.str1.1)
+    __arm_cp.0_0                             0x08003f38   Number         4  scheduler.o(.text.scheduler)
+    __arm_cp.0_1                             0x08003f3c   Number         4  scheduler.o(.text.scheduler)
+    __arm_cp.0_2                             0x08003f40   Number         4  scheduler.o(.text.scheduler)
+    __arm_cp.0_3                             0x08003f44   Number         4  scheduler.o(.text.scheduler)
+    __arm_cp.0_4                             0x08003f48   Number         4  scheduler.o(.text.scheduler)
+    __arm_cp.0_5                             0x08003f4c   Number         4  scheduler.o(.text.scheduler)
+    __arm_cp.0_6                             0x08003f50   Number         4  scheduler.o(.text.scheduler)
+    i.__0sprintf                             0x08003f54   Section        0  printfa.o(i.__0sprintf)
+    i.__ARM_clz                              0x08003f7c   Section        0  depilogue.o(i.__ARM_clz)
+    i.__aeabi_errno_addr                     0x08003fac   Section        0  errno.o(i.__aeabi_errno_addr)
+    i.__scatterload_copy                     0x08003fb4   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08003fc2   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08003fc4   Section       14  handlers.o(i.__scatterload_zeroinit)
+    _fp_digits                               0x08003fd5   Thumb Code   344  printfa.o(i._fp_digits)
+    i._fp_digits                             0x08003fd4   Section        0  printfa.o(i._fp_digits)
+    _printf_core                             0x08004149   Thumb Code  1754  printfa.o(i._printf_core)
+    i._printf_core                           0x08004148   Section        0  printfa.o(i._printf_core)
+    _printf_post_padding                     0x08004835   Thumb Code    32  printfa.o(i._printf_post_padding)
+    i._printf_post_padding                   0x08004834   Section        0  printfa.o(i._printf_post_padding)
+    _printf_pre_padding                      0x08004855   Thumb Code    44  printfa.o(i._printf_pre_padding)
+    i._printf_pre_padding                    0x08004854   Section        0  printfa.o(i._printf_pre_padding)
+    _sputc                                   0x08004881   Thumb Code    10  printfa.o(i._sputc)
+    i._sputc                                 0x08004880   Section        0  printfa.o(i._sputc)
+    .constdata                               0x0800488a   Section      129  ctype_o.o(.constdata)
+    table                                    0x0800490c   Data           4  ctype_o.o(.constdata)
+    .constdata                               0x0800490c   Section        4  ctype_o.o(.constdata)
+    .L.str.9                                 0x08004931   Data           5  comport.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08004931   Section        0  comport.o(.rodata.str1.1)
+    .L.str.5                                 0x08004936   Data           5  comport.o(.rodata.str1.1)
+    .L.str.6                                 0x0800493b   Data           5  comport.o(.rodata.str1.1)
+    .L.str.4                                 0x08004940   Data           5  comport.o(.rodata.str1.1)
+    .L.str                                   0x08004945   Data           5  comport.o(.rodata.str1.1)
+    .L.str.2                                 0x0800494a   Data           5  comport.o(.rodata.str1.1)
+    .L.str.7                                 0x0800494f   Data           5  comport.o(.rodata.str1.1)
+    .L.str.3                                 0x08004954   Data           5  comport.o(.rodata.str1.1)
+    .L.str.8                                 0x08004959   Data           5  comport.o(.rodata.str1.1)
+    .L.str.1                                 0x0800495e   Data           5  comport.o(.rodata.str1.1)
+    .L.str.10                                0x08004963   Data          15  comport.o(.rodata.str1.1)
+    .L.str                                   0x08004972   Data           2  gps.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x08004972   Section        0  gps.o(.rodata.str1.1)
     state                                    0x20000000   Data           4  strtok.o(.data)
     .data                                    0x20000000   Section        4  strtok.o(.data)
     _errno                                   0x20000004   Data           4  errno.o(.data)
@@ -2189,24 +2189,24 @@ Image Symbol Table
     USART1_IRQHandler                        0x08003c2d   Thumb Code    76  stm32l0xx_it.o(.text.USART1_IRQHandler)
     USART4_5_IRQHandler                      0x08003c79   Thumb Code     2  stm32l0xx_it.o(.text.USART4_5_IRQHandler)
     main                                     0x08003c7d   Thumb Code   276  main.o(.text.main)
-    scheduler                                0x08003d8d   Thumb Code   484  scheduler.o(.text.scheduler)
-    __0sprintf                               0x08003f71   Thumb Code    36  printfa.o(i.__0sprintf)
-    __1sprintf                               0x08003f71   Thumb Code     0  printfa.o(i.__0sprintf)
-    __2sprintf                               0x08003f71   Thumb Code     0  printfa.o(i.__0sprintf)
-    __c89sprintf                             0x08003f71   Thumb Code     0  printfa.o(i.__0sprintf)
-    sprintf                                  0x08003f71   Thumb Code     0  printfa.o(i.__0sprintf)
-    __ARM_clz                                0x08003f99   Thumb Code    46  depilogue.o(i.__ARM_clz)
-    __aeabi_errno_addr                       0x08003fc9   Thumb Code     4  errno.o(i.__aeabi_errno_addr)
-    __rt_errno_addr                          0x08003fc9   Thumb Code     0  errno.o(i.__aeabi_errno_addr)
-    __scatterload_copy                       0x08003fd1   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x08003fdf   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08003fe1   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    __ctype_table                            0x080048a6   Data         129  ctype_o.o(.constdata)
-    AHBPrescTable                            0x0800492c   Data          16  system_stm32l0xx.o(.rodata.AHBPrescTable)
-    APBPrescTable                            0x0800493c   Data           8  system_stm32l0xx.o(.rodata.APBPrescTable)
-    PLLMulTable                              0x08004944   Data           9  system_stm32l0xx.o(.rodata.PLLMulTable)
-    Region$$Table$$Base                      0x08004990   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080049b0   Number         0  anon$$obj.o(Region$$Table)
+    scheduler                                0x08003d8d   Thumb Code   456  scheduler.o(.text.scheduler)
+    __0sprintf                               0x08003f55   Thumb Code    36  printfa.o(i.__0sprintf)
+    __1sprintf                               0x08003f55   Thumb Code     0  printfa.o(i.__0sprintf)
+    __2sprintf                               0x08003f55   Thumb Code     0  printfa.o(i.__0sprintf)
+    __c89sprintf                             0x08003f55   Thumb Code     0  printfa.o(i.__0sprintf)
+    sprintf                                  0x08003f55   Thumb Code     0  printfa.o(i.__0sprintf)
+    __ARM_clz                                0x08003f7d   Thumb Code    46  depilogue.o(i.__ARM_clz)
+    __aeabi_errno_addr                       0x08003fad   Thumb Code     4  errno.o(i.__aeabi_errno_addr)
+    __rt_errno_addr                          0x08003fad   Thumb Code     0  errno.o(i.__aeabi_errno_addr)
+    __scatterload_copy                       0x08003fb5   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08003fc3   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08003fc5   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    __ctype_table                            0x0800488a   Data         129  ctype_o.o(.constdata)
+    AHBPrescTable                            0x08004910   Data          16  system_stm32l0xx.o(.rodata.AHBPrescTable)
+    APBPrescTable                            0x08004920   Data           8  system_stm32l0xx.o(.rodata.APBPrescTable)
+    PLLMulTable                              0x08004928   Data           9  system_stm32l0xx.o(.rodata.PLLMulTable)
+    Region$$Table$$Base                      0x08004974   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08004994   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x2000000c   Data           4  system_stm32l0xx.o(.data.SystemCoreClock)
     ComRxBuff                                0x20000010   Data          64  comport.o(.bss.ComRxBuff)
     ComRxReadFrom                            0x20000050   Data           4  comport.o(.bss.ComRxReadFrom)
@@ -2223,9 +2223,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000c1
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000049c0, Max: 0x00030000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000049a8, Max: 0x00030000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000049b0, Max: 0x00030000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00004994, Max: 0x00030000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2462,39 +2462,39 @@ Memory Map of the image
     0x08003c78   0x08003c78   0x00000002   Code   RO          302    .text.USART4_5_IRQHandler  stm32l0xx_it.o
     0x08003c7a   0x08003c7a   0x00000002   PAD
     0x08003c7c   0x08003c7c   0x00000110   Code   RO          189    .text.main          main.o
-    0x08003d8c   0x08003d8c   0x000001e4   Code   RO          131    .text.scheduler     scheduler.o
-    0x08003f70   0x08003f70   0x00000028   Code   RO          856    i.__0sprintf        mc_p.l(printfa.o)
-    0x08003f98   0x08003f98   0x0000002e   Code   RO          974    i.__ARM_clz         mf_p.l(depilogue.o)
-    0x08003fc6   0x08003fc6   0x00000002   PAD
-    0x08003fc8   0x08003fc8   0x00000008   Code   RO          910    i.__aeabi_errno_addr  mc_p.l(errno.o)
-    0x08003fd0   0x08003fd0   0x0000000e   Code   RO          980    i.__scatterload_copy  mc_p.l(handlers.o)
-    0x08003fde   0x08003fde   0x00000002   Code   RO          981    i.__scatterload_null  mc_p.l(handlers.o)
-    0x08003fe0   0x08003fe0   0x0000000e   Code   RO          982    i.__scatterload_zeroinit  mc_p.l(handlers.o)
-    0x08003fee   0x08003fee   0x00000002   PAD
-    0x08003ff0   0x08003ff0   0x00000174   Code   RO          861    i._fp_digits        mc_p.l(printfa.o)
-    0x08004164   0x08004164   0x000006ec   Code   RO          862    i._printf_core      mc_p.l(printfa.o)
-    0x08004850   0x08004850   0x00000020   Code   RO          863    i._printf_post_padding  mc_p.l(printfa.o)
-    0x08004870   0x08004870   0x0000002c   Code   RO          864    i._printf_pre_padding  mc_p.l(printfa.o)
-    0x0800489c   0x0800489c   0x0000000a   Code   RO          866    i._sputc            mc_p.l(printfa.o)
-    0x080048a6   0x080048a6   0x00000081   Data   RO          942    .constdata          mc_p.l(ctype_o.o)
-    0x08004927   0x08004927   0x00000001   PAD
-    0x08004928   0x08004928   0x00000004   Data   RO          943    .constdata          mc_p.l(ctype_o.o)
-    0x0800492c   0x0800492c   0x00000010   Data   RO          337    .rodata.AHBPrescTable  system_stm32l0xx.o
-    0x0800493c   0x0800493c   0x00000008   Data   RO          338    .rodata.APBPrescTable  system_stm32l0xx.o
-    0x08004944   0x08004944   0x00000009   Data   RO          339    .rodata.PLLMulTable  system_stm32l0xx.o
-    0x0800494d   0x0800494d   0x00000041   Data   RO           52    .rodata.str1.1      comport.o
-    0x0800498e   0x0800498e   0x00000002   Data   RO          121    .rodata.str1.1      gps.o
-    0x08004990   0x08004990   0x00000020   Data   RO          979    Region$$Table       anon$$obj.o
+    0x08003d8c   0x08003d8c   0x000001c8   Code   RO          131    .text.scheduler     scheduler.o
+    0x08003f54   0x08003f54   0x00000028   Code   RO          856    i.__0sprintf        mc_p.l(printfa.o)
+    0x08003f7c   0x08003f7c   0x0000002e   Code   RO          974    i.__ARM_clz         mf_p.l(depilogue.o)
+    0x08003faa   0x08003faa   0x00000002   PAD
+    0x08003fac   0x08003fac   0x00000008   Code   RO          910    i.__aeabi_errno_addr  mc_p.l(errno.o)
+    0x08003fb4   0x08003fb4   0x0000000e   Code   RO          980    i.__scatterload_copy  mc_p.l(handlers.o)
+    0x08003fc2   0x08003fc2   0x00000002   Code   RO          981    i.__scatterload_null  mc_p.l(handlers.o)
+    0x08003fc4   0x08003fc4   0x0000000e   Code   RO          982    i.__scatterload_zeroinit  mc_p.l(handlers.o)
+    0x08003fd2   0x08003fd2   0x00000002   PAD
+    0x08003fd4   0x08003fd4   0x00000174   Code   RO          861    i._fp_digits        mc_p.l(printfa.o)
+    0x08004148   0x08004148   0x000006ec   Code   RO          862    i._printf_core      mc_p.l(printfa.o)
+    0x08004834   0x08004834   0x00000020   Code   RO          863    i._printf_post_padding  mc_p.l(printfa.o)
+    0x08004854   0x08004854   0x0000002c   Code   RO          864    i._printf_pre_padding  mc_p.l(printfa.o)
+    0x08004880   0x08004880   0x0000000a   Code   RO          866    i._sputc            mc_p.l(printfa.o)
+    0x0800488a   0x0800488a   0x00000081   Data   RO          942    .constdata          mc_p.l(ctype_o.o)
+    0x0800490b   0x0800490b   0x00000001   PAD
+    0x0800490c   0x0800490c   0x00000004   Data   RO          943    .constdata          mc_p.l(ctype_o.o)
+    0x08004910   0x08004910   0x00000010   Data   RO          337    .rodata.AHBPrescTable  system_stm32l0xx.o
+    0x08004920   0x08004920   0x00000008   Data   RO          338    .rodata.APBPrescTable  system_stm32l0xx.o
+    0x08004928   0x08004928   0x00000009   Data   RO          339    .rodata.PLLMulTable  system_stm32l0xx.o
+    0x08004931   0x08004931   0x00000041   Data   RO           52    .rodata.str1.1      comport.o
+    0x08004972   0x08004972   0x00000002   Data   RO          121    .rodata.str1.1      gps.o
+    0x08004974   0x08004974   0x00000020   Data   RO          979    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080049b0, Size: 0x00000460, Max: 0x00005000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08004998, Size: 0x00000460, Max: 0x00005000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x080049b0   0x00000004   Data   RW          848    .data               mc_p.l(strtok.o)
-    0x20000004   0x080049b4   0x00000004   Data   RW          913    .data               mc_p.l(errno.o)
-    0x20000008   0x080049b8   0x00000004   Data   RW           84    .data.FLASH_readFixes.currAddr  flash.o
-    0x2000000c   0x080049bc   0x00000004   Data   RW          336    .data.SystemCoreClock  system_stm32l0xx.o
+    0x20000000   0x08004998   0x00000004   Data   RW          848    .data               mc_p.l(strtok.o)
+    0x20000004   0x0800499c   0x00000004   Data   RW          913    .data               mc_p.l(errno.o)
+    0x20000008   0x080049a0   0x00000004   Data   RW           84    .data.FLASH_readFixes.currAddr  flash.o
+    0x2000000c   0x080049a4   0x00000004   Data   RW          336    .data.SystemCoreClock  system_stm32l0xx.o
     0x20000010        -       0x00000040   Zero   RW           51    .bss.ComRxBuff      comport.o
     0x20000050        -       0x00000004   Zero   RW           50    .bss.ComRxReadFrom  comport.o
     0x20000054        -       0x00000004   Zero   RW           53    .bss.ComRxReadTo    comport.o
@@ -2514,8 +2514,8 @@ Image component sizes
       1188         52          0          4          0       3810   flash.o
       1988         86          2          0          0       6327   gps.o
        268         28          0          0          0       2193   lowpower.o
-      2642         88          0          0          4      12296   main.o
-       484         28          0          0          0       1503   scheduler.o
+      2642         88          0          0          4      12298   main.o
+       456         28          0          0          0       1502   scheduler.o
         28          8        192          0       1024        592   startup_stm32l071xx.o
        150         28          0          0          0       2292   stm32l0xx_it.o
        534          0          0          0          0       3824   stm32l0xx_ll_gpio.o
@@ -2529,7 +2529,7 @@ Image component sizes
        810         44          0          0          0       5154   timers.o
 
     ----------------------------------------------------------------------
-     13880        652        324          8       1104      86110   Object Totals
+     13852        652        324          8       1104      86111   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         26          0          0          0          0          0   (incl. Padding)
 
@@ -2598,15 +2598,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     18406        806        458         16       1104      87398   Grand Totals
-     18406        806        458         16       1104      87398   ELF Image Totals
-     18406        806        458         16          0          0   ROM Totals
+     18378        806        458         16       1104      87399   Grand Totals
+     18378        806        458         16       1104      87399   ELF Image Totals
+     18378        806        458         16          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                18864 (  18.42kB)
+    Total RO  Size (Code + RO Data)                18836 (  18.39kB)
     Total RW  Size (RW Data + ZI Data)              1120 (   1.09kB)
-    Total ROM Size (Code + RO Data + RW Data)      18880 (  18.44kB)
+    Total ROM Size (Code + RO Data + RW Data)      18852 (  18.41kB)
 
 ==============================================================================
 

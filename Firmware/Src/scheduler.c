@@ -53,8 +53,8 @@ void scheduler(int* GPS_active, int* XB_VHF_active){
 		EEPROM_WriteByte(gps_lastMins, LASTMINS_ADDR);
 		FLASH_Lock();
 		
-	}else if( ( (sTime.Hours - GPS_hoursBetween) >= gps_lastHours) &
-						(	(sTime.Minutes - GPS_minutesBetween) >= gps_lastMins) ){
+	}
+	if( *GPS_active == 0 && ( (sTime.Hours - GPS_hoursBetween) >= gps_lastHours) && ( (sTime.Minutes - GPS_minutesBetween) >= gps_lastMins) ){
 							
 		*GPS_active = 1;
 		gps_lastHours = sTime.Hours;

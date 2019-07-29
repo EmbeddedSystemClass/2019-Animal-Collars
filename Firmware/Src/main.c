@@ -124,7 +124,6 @@ int main(void)
 				while (CC_ComPortPresent())
 				{
 					CC_ExecuteCommand(CC_ParseCommand());
-					break;
 				}//While present 
 			}//Check handshake	
 

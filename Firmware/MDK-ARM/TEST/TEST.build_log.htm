@@ -26,12 +26,77 @@ Project File Date:  07/27/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.12', folder: 'D:\Keil_v5\ARM\ARMCLANG\Bin'
-Build target 'TEST'
+Rebuild target 'TEST'
+assembling startup_stm32l071xx.s...
+../Src/flash.c(163): warning: incompatible pointer types passing 'uint32_t *' (aka 'unsigned int *') to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+        FLASH_ReadData( &startAddr, 4, NEXTSTARTADDR_ADDR);
+                        ^~~~~~~~~~
+../Src/flash.c(70): note: passing argument to parameter 'str' here
+int FLASH_ReadData(unsigned char * str, int len, unsigned int addr)
+                                   ^
+../Src/flash.c(180): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &position.time[0];       // Time: 4/4
+             ^ ~~~~~~~~~~~~~~~~~
+../Src/flash.c(182): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &position.date[0]; // Date: 4/6
+             ^ ~~~~~~~~~~~~~~~~~
+../Src/flash.c(184): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &str1[0];                                        // Date: 6/6 | Lat 2/10
+             ^ ~~~~~~~~
+../Src/flash.c(186): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &position.lat[2];        // Lat: 6/10
+             ^ ~~~~~~~~~~~~~~~~
+../Src/flash.c(188): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &position.lat[6];        // Lat: 10/10
+             ^ ~~~~~~~~~~~~~~~~
+../Src/flash.c(190): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &str2[0];                                        // NS: 1/1 | Longt: 3/10
+             ^ ~~~~~~~~
+../Src/flash.c(192): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &position.longt[3];// Longt: 7/10
+             ^ ~~~~~~~~~~~~~~~~~~
+../Src/flash.c(194): warning: incompatible pointer types assigning to 'uint32_t *' (aka 'unsigned int *') from 'char *' [-Wincompatible-pointer-types]
+        data = &str3[0];
+             ^ ~~~~~~~~
+../Src/flash.c(205): warning: incompatible pointer types passing 'uint32_t *' (aka 'unsigned int *') to parameter of type 'unsigned char *' [-Wincompatible-pointer-types]
+        FLASH_ReadData( &lastSavedAddr, 4, NEXTSTARTADDR_ADDR);
+                        ^~~~~~~~~~~~~~
+../Src/flash.c(70): note: passing argument to parameter 'str' here
+int FLASH_ReadData(unsigned char * str, int len, unsigned int addr)
+                                   ^
+10 warnings generated.
+compiling flash.c...
+../Src/gps.c(507): warning: '&&' within '||' [-Wlogical-op-parentheses]
+        while( ((TIM2->SR & TIM_SR_UIF) == 0) && (position.acc > GPS_ACC_REQ) || (position.date[4] == 0) ){
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~
+../Src/gps.c(507): note: place parentheses around the '&&' expression to silence this warning
+        while( ((TIM2->SR & TIM_SR_UIF) == 0) && (position.acc > GPS_ACC_REQ) || (position.date[4] == 0) ){
+                                              ^
+               (                                                             )
+1 warning generated.
+compiling gps.c...
+compiling comport.c...
+compiling scheduler.c...
+compiling xbee.c...
+compiling timers.c...
 compiling main.c...
+compiling stm32l0xx_it.c...
+compiling lowpower.c...
+compiling system_stm32l0xx.c...
+compiling stm32l0xx_ll_gpio.c...
+compiling stm32l0xx_ll_spi.c...
+compiling stm32l0xx_ll_rtc.c...
+compiling stm32l0xx_ll_dma.c...
+compiling stm32l0xx_ll_pwr.c...
+compiling stm32l0xx_ll_exti.c...
+compiling stm32l0xx_ll_tim.c...
+compiling stm32l0xx_ll_usart.c...
+compiling stm32l0xx_ll_rcc.c...
+compiling stm32l0xx_ll_utils.c...
 linking...
-Program Size: Code=18406 RO-data=458 RW-data=16 ZI-data=1104  
+Program Size: Code=18378 RO-data=458 RW-data=16 ZI-data=1104  
 FromELF: creating hex file...
-"TEST\TEST.axf" - 0 Error(s), 0 Warning(s).
+"TEST\TEST.axf" - 0 Error(s), 11 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,7 +119,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.2.0
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:07
 </pre>
 </body>
 </html>
