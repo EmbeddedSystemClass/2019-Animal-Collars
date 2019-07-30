@@ -23,4 +23,5 @@ test/gps.o: ..\Src\gps.c ..\Inc\globals.h ..\Inc\main.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_gpio.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Inc\gps.h \
-  ..\Inc\timers.h ..\Inc\gps.h ..\Inc\comport.h ..\Inc\flash.h
+  ..\Inc\timers.h ..\Inc\gps.h ..\Inc\comport.h ..\Inc\flash.h \
+  ..\Inc\main.h

@@ -7,6 +7,7 @@
 #define FLASH_H_
 
 #include "gps.h"
+#include "main.h"
 
 //Macros
 //----------------------------------------------
@@ -17,8 +18,10 @@
 
 #define PAGE_SZE 128 // in bytes
 #define DATA_LENGTH 32
-#define DATA_START_ADDR 	0x08013700
-#define END_OF_MEMORY			0x08017FFF
+
+#define DATA_START_ADDR 	0x08005800  // Page 112
+
+#define END_OF_MEMORY			0x08017F7F
 
 #define NEXTSTARTADDR_ADDR  0x08080014
 

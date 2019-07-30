@@ -504,7 +504,7 @@ int GPS_subroutine(void){
 	
 	int temp = 0;
 	TIM2_initDelay_inline( GPS_TIMEOUT );
-	while( ((TIM2->SR & TIM_SR_UIF) == 0) && (position.acc > GPS_ACC_REQ) || (position.date[4] == 0) ){
+	while( ((TIM2->SR & TIM_SR_UIF) == 0) && ((position.acc > GPS_ACC_REQ) || (position.date[4] == 0)) ){
 		position = GPS_getNMEA(position);
 	}
 	

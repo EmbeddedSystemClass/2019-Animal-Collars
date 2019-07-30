@@ -32,6 +32,7 @@
 
 //Program data
 #define MAX_PGM_LEN 50
+#define COMPORT_TIMEOUT 1000
 
 //Prototypes
 //----------------------------------------------
@@ -47,6 +48,8 @@ int CC_SetProgram();
 int CC_ReadProgram();
 int CC_ConfigureXbee();
 int CC_DownloadFixes();
+
+int setLED(int state);
 
 
 

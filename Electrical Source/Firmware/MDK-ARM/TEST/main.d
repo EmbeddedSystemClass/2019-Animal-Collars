@@ -22,6 +22,6 @@ test/main.o: ..\Src\main.c ..\Inc\main.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_usart.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_gpio.h \
   ..\Inc\comport.h ..\Inc\globals.h ..\Inc\flash.h ..\Inc\gps.h \
-  ..\Inc\xbee.h ..\Inc\timers.h ..\Inc\scheduler.h ..\Inc\globals.h \
-  ..\Inc\timers.h ..\Inc\lowpower.h \
+  ..\Inc\main.h ..\Inc\xbee.h ..\Inc\timers.h ..\Inc\scheduler.h \
+  ..\Inc\globals.h ..\Inc\timers.h ..\Inc\lowpower.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h

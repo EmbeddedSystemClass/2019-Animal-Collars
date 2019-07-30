@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>TEST</TargetName>
+      <TargetName>AnimalCollar</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6120000::V6.12::.\ARMCLANG</pCCUsed>
@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>TEST\</OutputDirectory>
-          <OutputName>TEST</OutputName>
+          <OutputName>AnimalCollar</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -572,7 +572,7 @@
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.2.0" condition="ARMv6_7_8-M Device">
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.5.1"/>
         <targetInfos>
-          <targetInfo name="TEST"/>
+          <targetInfo name="AnimalCollar"/>
         </targetInfos>
       </component>
     </components>

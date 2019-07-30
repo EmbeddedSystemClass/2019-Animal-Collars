@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "xbee.h"
+#include "timers.h"
 //Software init
 	char ComRxBuff[BUFFER_SIZE];	//Ring bufer for raw input
 	int ComRxWriteIndex = 0;	//Current write index of buffer
@@ -22,9 +23,13 @@
 //---------------------------------------------------
 int CC_ComPortPresent()
 {
-	//return (USB_PRSNT_GPIO_Port->IDR & USB_PRSNT_Pin) == USB_PRSNT_Pin;
+	if( (USB_PRSNT_GPIO_Port->IDR & USB_PRSNT_Pin) == USB_PRSNT_Pin ){
+		return 1;
+	}else{
+		return 0;
+	}
 	
-	return TRUE; //Placeholder function, should poll the usb
+	//return TRUE; //Placeholder function, should poll the usb
 							//present line in future
 }
 //---------------------------------------------------
@@ -174,7 +179,9 @@ int CC_SetRTC()
 	LL_RTC_DateTypeDef currdate;
 	
 	//Check for data in buffer
-	while(ComRxBuff[ComRxWriteIndex-1] != EOC) //Waiting for end of second transmission
+	
+	TIM2_initDelay_inline( COMPORT_TIMEOUT	);
+	while( ((TIM2->SR & TIM_SR_UIF) == 0) && (ComRxBuff[ComRxWriteIndex-1] != EOC)) //Waiting for end of second transmission
 	{
 		
 	}		//Really dirty way of doing this, @TODO fix this
@@ -272,7 +279,8 @@ int CC_SetProgram()
 	memset(program, 0, sizeof(program));
 	
 	//Check for data in buffer
-	while(ComRxBuff[ComRxWriteIndex-1] != EOC) //Waiting for end of second transmission
+	TIM2_initDelay_inline( COMPORT_TIMEOUT	);
+	while( ((TIM2->SR & TIM_SR_UIF) == 0) && (ComRxBuff[ComRxWriteIndex-1] != EOC)) //Waiting for end of second transmission
 	{
 		
 	}		//Really dirty way of doing this, @TODO fix this
@@ -334,7 +342,8 @@ int CC_ConfigureXbee()
 	int i, ret;	
 	
 	//Check for data in buffer
-	while(ComRxBuff[ComRxWriteIndex-1] != EOC) //Waiting for end of second transmission
+	TIM2_initDelay_inline( COMPORT_TIMEOUT	);
+	while( ((TIM2->SR & TIM_SR_UIF) == 0) && (ComRxBuff[ComRxWriteIndex-1] != EOC)) //Waiting for end of second transmission
 	{
 		
 	}		//Really dirty way of doing this, @TODO fix this
@@ -399,3 +408,16 @@ int CC_DownloadFixes()
 	
 	return 0;
 }	
+
+int setLED(int state){
+	if( state == 1){
+		LED0_GPIO_Port -> ODR |= LED0_Pin;
+		return 0;
+	}else if(state == 2){
+		LED0_GPIO_Port -> ODR ^= LED0_Pin;
+		return 0;
+	}else{
+		LED0_GPIO_Port -> ODR &= ~LED0_Pin;
+		return 0;
+	}
+}

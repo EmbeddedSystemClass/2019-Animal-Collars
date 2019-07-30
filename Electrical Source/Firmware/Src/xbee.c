@@ -4,7 +4,7 @@
 * with a researchers computer via the xbee device onboard
 ****************************************************/
 
-#ifdef __LARGE_COLLAR_
+
 
 //Includes
 #include "comport.h"
@@ -82,7 +82,7 @@ int XB_XbeeSubroutine()
 void XB_EnableXbee()
 {
 	XBEE_EN_GPIO_Port->ODR &= ~XBEE_EN_Pin;
-	TIM2_delay(250);
+	TIM2_delay(500);
 }
 //---------------------------------------------------
 void XB_DisableXbee()
@@ -121,22 +121,8 @@ int XB_GetResponse(char * resp, int *len)
 {
 	int i;
 	
-	// Start Timeout timer
-	// Delay is in ms 
-	// Clear the update event flag 
-	TIM2->SR = 0;
-	
-	// Make sure it's reset
-	TIM2->CNT = 0;
-	
-	// Move the delay into the ARR:
-	TIM2->ARR = PROGRAM_TIMEOUT;
-	
-	// Start the timer:
-	TIM2->CR1 |= TIM_CR1_CEN;
-	
-	
 	//Check for data in buffer (Wait for resp from device)
+	TIM2_initDelay_inline(PROGRAM_TIMEOUT);
 	while((XbeeRxBuff[XbeeRxWriteIndex-1] != CRtn) && !(TIM2->SR & TIM_SR_UIF)) //Waiting for end of second transmission
 	{
 		
@@ -480,6 +466,5 @@ void VHF_DisableVHF()
 	return;
 }
 
-#endif
 //---------------------------------------------------
 /*--EOF--*/

@@ -114,20 +114,22 @@ int main(void)
 
 		//Check for com port connected (should be while to hold device in this state)
 		//----------------------------
-		if(CC_ComPortPresent())
+		while(CC_ComPortPresent())
 		{
-			
+			if( TIM2->SR & TIM_SR_UIF){
+				TIM2_initDelay_inline(100);
+				setLED(2);
+			}
 			//Check for handshake from GUI
 			if(CC_CheckForHandshake())
 			{
+				setLED(1);
 				//Handshake completed, look for command, execute commands and loop
 				while (CC_ComPortPresent())
 				{
 					CC_ExecuteCommand(CC_ParseCommand());
 				}//While present 
-			}//Check handshake	
-
-			
+			}//Check handshake
 		}//Comport present 
 		//Logic low hall effect sensor, this means no mag is present
 		if( (MAG_SENSE_GPIO_Port->IDR & MAG_SENSE_Pin) != 0 )

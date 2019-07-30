@@ -74,8 +74,21 @@ int LPM_gpioInit(void){
 	
 	GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+#ifndef __LARGE_COLLAR_
+	// Disables XBEE_EN pin on small collar
+	GPIO_InitStruct.Pin = XBEE_EN_Pin;
+  LL_GPIO_Init(XBEE_EN_GPIO_Port, &GPIO_InitStruct);
+	// Disables VHF_EN Pin on small collar
+	GPIO_InitStruct.Pin = VHF_EN_Pin;
+  LL_GPIO_Init(VHF_EN_GPIO_Port, &GPIO_InitStruct);
+	
+	GPIOA -> ODR &= ~(XBEE_EN_Pin | VHF_EN_Pin);
+#endif
+	
 	
 	GPIOA -> ODR &= ~( LL_GPIO_PIN_2 | LL_GPIO_PIN_4 | LL_GPIO_PIN_11 | LL_GPIO_PIN_12 | LL_GPIO_PIN_15);
+	GPIOB -> ODR &= ~(LL_GPIO_PIN_0 | LL_GPIO_PIN_1);
 
 	return 0;	
 };

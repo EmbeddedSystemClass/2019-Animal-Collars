@@ -21,4 +21,5 @@ test/flash.o: ..\Src\flash.c ..\Inc\comport.h ..\Inc\globals.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_tim.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_usart.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_ll_gpio.h ..\Inc\flash.h \
-  ..\Inc\gps.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h
+  ..\Inc\gps.h ..\Inc\main.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h
