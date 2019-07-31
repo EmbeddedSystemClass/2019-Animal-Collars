@@ -13,6 +13,10 @@ void scheduler(int* GPS_active, int* XB_VHF_active){
 	uint8_t GPS_hoursBetween;
 	uint8_t GPS_minutesBetween;
 	
+	int minLastTime = 0;		// Last time in minutes
+	int minCurTime  = 0;		// Current time in minutes
+	int minTimeBetw = 0;		// Time between in minutes
+	
 	LL_RTC_TimeTypeDef sTime;
 	LL_RTC_DateTypeDef sDate;
 	
@@ -54,7 +58,12 @@ void scheduler(int* GPS_active, int* XB_VHF_active){
 		FLASH_Lock();
 		
 	}
-	if( *GPS_active == 0 && ( (sTime.Hours - GPS_hoursBetween) >= gps_lastHours) && ( (sTime.Minutes - GPS_minutesBetween) >= gps_lastMins) ){
+	
+	minCurTime  = (sTime.Hours * 60) + sTime.Minutes;
+	minLastTime = (gps_lastHours * 60) + gps_lastMins;
+	minTimeBetw = (GPS_hoursBetween * 60) + GPS_minutesBetween;
+	
+	if( *GPS_active == 0 && ( (minCurTime - minLastTime) >= minTimeBetw )){
 							
 		*GPS_active = 1;
 		gps_lastHours = sTime.Hours;

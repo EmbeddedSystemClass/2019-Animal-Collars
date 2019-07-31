@@ -23,6 +23,12 @@
 //---------------------------------------------------
 int CC_ComPortPresent()
 {
+	
+#ifndef __PRODUCTION_
+		return 0;
+#endif	
+	
+	
 	if( (USB_PRSNT_GPIO_Port->IDR & USB_PRSNT_Pin) == USB_PRSNT_Pin ){
 		return 1;
 	}else{
