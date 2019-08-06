@@ -160,10 +160,10 @@ int main(void)
 			if(XB_VHF_active)
 			{
 				MX_USART4_UART_Init();
-				setLED(1);
+				//setLED(1);
 				XB_XbeeSubroutine();
 				VHF_EnableVHF();
-				setLED(0);
+				//setLED(0);
 			}
 			else
 			{
