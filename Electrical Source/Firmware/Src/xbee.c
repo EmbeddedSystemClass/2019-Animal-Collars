@@ -33,24 +33,11 @@ int XB_XbeeSubroutine()
 	USART4->CR1 |= USART_CR1_UE;
 	
 	
-	// Start Timeout timer
-	// Delay is in ms 
-	// Clear the update event flag 
-	TIM2->SR = 0;
-	
-	// Make sure it's reset
-	TIM2->CNT = 0;
-	
-	// Move the delay into the ARR:
-	TIM2->ARR = SUBROUTINE_TIMEOUT;
-	
-	// Start the timer:
-	TIM2->CR1 |= TIM_CR1_CEN;
-	
+	TIM2_initDelay_inline(SUBROUTINE_TIMEOUT);
 	
 	//Check for dongle handshake and timeout
 	//While not timed out 
-	while(!(TIM2->SR & TIM_SR_UIF))
+	while( !(TIM2->SR & TIM_SR_UIF) )
 	{
 		if(!XB_CheckForDongle())//Handshake complete			
 		{	
@@ -427,17 +414,21 @@ int XB_TransmitFixes()
 		XB_SendByte(',');
 
 		//Send Lat
-		XB_SendData(&buff[10], 10);
-		XB_SendByte(',');		
-		XB_SendData(&buff[20], 1);
-		XB_SendByte(',');
+		CC_SendData(&buff[10], 2);
+		CC_SendByte(',');
+		CC_SendData(&buff[12], 8);
+		CC_SendByte(',');		
+		CC_SendData(&buff[20], 1);
+		CC_SendByte(',');
 		
 		//Send Long
-		XB_SendData(&buff[21], 10);
-		XB_SendByte(',');
-		XB_SendData(&buff[31], 1);
-		XB_SendByte(',');
-		XB_SendByte('\n');
+		CC_SendData(&buff[21], 3);
+		CC_SendByte(',');
+		CC_SendData(&buff[24], 7);
+		CC_SendByte(',');
+		CC_SendData(&buff[31], 1);
+		CC_SendByte(',');
+		CC_SendByte('\n');
 		memset(buff, 0, sizeof(buff));
 	}
 	XB_SendByte(EOC);

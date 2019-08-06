@@ -48,7 +48,7 @@ void scheduler(int* GPS_active, int* XB_VHF_active){
 	
 	
 	// Check VHF Active Period
-	if( (VHF_activeDay && (0x01 << sDate.WeekDay) ) != 0){
+	if( (VHF_activeDay & (0x01 << (sDate.WeekDay - 1) ) ) != 0){
 		if( (minCurTime >= minVHFStartTime) && (minCurTime <= minVHFEndTime) ){
 			*XB_VHF_active = 1;
 		}else{

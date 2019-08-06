@@ -161,6 +161,7 @@ int FLASH_saveFix( struct GPS_POS position){
 	
 	
 	FLASH_ReadData( &startAddr, 4, NEXTSTARTADDR_ADDR);
+	if( startAddr < 0x08005900 ) startAddr = 0x08005900;
 	
 	nextStartAddr = startAddr + DATA_LENGTH;
 	

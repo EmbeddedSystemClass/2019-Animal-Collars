@@ -20,7 +20,6 @@ int LPM_stop(void){
 
 	GPS_GPSDisable();
 #ifdef __LARGE_COLLAR_	
-	VHF_DisableVHF();
 	XB_DisableXbee();
 #endif
 	// Disable SPI:

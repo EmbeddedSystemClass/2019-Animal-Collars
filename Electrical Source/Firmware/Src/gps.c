@@ -512,12 +512,19 @@ int GPS_subroutine(void){
 	
 	
 	int temp = 0;
-	while( ( (firstFixFlag == 0) && (firstFixRuns < GPS_FIRST_FIX_CYCLES) ) || ((position.acc > GPS_ACC_REQ) || (position.date[4] == 0)) ){
+	if( firstFixFlag == 0){
+		while( firstFixRuns < GPS_FIRST_FIX_CYCLES){
+			TIM2_initDelay_inline( GPS_TIMEOUT );
+			while( ((TIM2->SR & TIM_SR_UIF) == 0) && ((position.acc > GPS_ACC_REQ) || (position.date[4] == 0)) ){
+				position = GPS_getNMEA(position);
+			}
+			firstFixRuns++;
+		}
+	}else{
 		TIM2_initDelay_inline( GPS_TIMEOUT );
 		while( ((TIM2->SR & TIM_SR_UIF) == 0) && ((position.acc > GPS_ACC_REQ) || (position.date[4] == 0)) ){
 			position = GPS_getNMEA(position);
 		}
-		firstFixRuns++;
 	}
 		
 		
