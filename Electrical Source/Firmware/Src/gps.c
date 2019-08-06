@@ -490,7 +490,16 @@ int GPS_subroutine(void){
 	LL_RTC_TimeTypeDef time;
 	LL_RTC_DateTypeDef date;
 	uint8_t validFix = 1;
+	int GPS_req_acc = GPS_ACC_REQ;
+	int firstFixRuns = 0;
+	static int firstFixFlag = 0;
 	
+	/*
+	FLASH_ReadData( &GPS_req_acc, 1, 0x08080005);
+		if( GPS_req_acc == 0){
+		GPS_req_acc = GPS_ACC_REQ;
+	}
+	*/
 	
 	GPS_GPSEnable();
 	// Enable SPI:
@@ -503,16 +512,20 @@ int GPS_subroutine(void){
 	
 	
 	int temp = 0;
-	TIM2_initDelay_inline( GPS_TIMEOUT );
-	while( ((TIM2->SR & TIM_SR_UIF) == 0) && ((position.acc > GPS_ACC_REQ) || (position.date[4] == 0)) ){
-		position = GPS_getNMEA(position);
+	while( ( (firstFixFlag == 0) && (firstFixRuns < GPS_FIRST_FIX_CYCLES) ) || ((position.acc > GPS_ACC_REQ) || (position.date[4] == 0)) ){
+		TIM2_initDelay_inline( GPS_TIMEOUT );
+		while( ((TIM2->SR & TIM_SR_UIF) == 0) && ((position.acc > GPS_ACC_REQ) || (position.date[4] == 0)) ){
+			position = GPS_getNMEA(position);
+		}
+		firstFixRuns++;
 	}
-	
+		
+		
 	// Disable SPI:
 	SPI1->CR1 &= ~SPI_CR1_SPE; 
 	GPS_GPSDisable();
 	
-	if(position.acc > GPS_ACC_REQ){
+		if(position.acc > GPS_ACC_REQ){
 		validFix = 0;
 		memset(position.lat, '0', sizeof(position.lat));
 		memset(position.longt, '0', sizeof(position.longt));
@@ -527,16 +540,10 @@ int GPS_subroutine(void){
 	date.WeekDay = (date.Day += date.Month < 3 ? date.Year--:date.Year-2,23*date.Month/9+date.Day+4+date.Year/4-date.Year/100+date.Year/400)%7;
 	
 	if( (date.Year != ',') && (date.Year > 0) && (date.Year < 100) ){
-		RTC_setTimeDate(time, date);
-	}else{
-		RTC_getTimeDate( &time, &date );
-		position.time[0] = (time.Hours / 10)+'0';  position.time[1] = (time.Hours % 10)+'0';
-		position.time[2] = (time.Hours / 10)+'0';  position.time[3] = (time.Hours % 10)+'0';
-		position.date[0] = (date.Day   / 10)+'0';  position.date[1] = (date.Day   % 10)+'0';
-		position.date[2] = (date.Month / 10)+'0';  position.date[3] = (date.Month % 10)+'0';
-		position.date[4] = (date.Year  / 10)+'0';  position.date[5] = (date.Year  % 10)+'0';		
+		RTC_setTimeDate(time, date);		
+		firstFixFlag = 1;
 	}
-	
+		
 	if(validFix == 1){
 		FLASH_saveFix(position);
 	}

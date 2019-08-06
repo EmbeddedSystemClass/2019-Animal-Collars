@@ -23,7 +23,6 @@
 //---------------------------------------------------
 int CC_ComPortPresent()
 {
-	
 #ifndef __PRODUCTION_
 		return 0;
 #endif	
@@ -279,7 +278,7 @@ int CC_SendTimestamp()
 //---------------------------------------------------
 int CC_SetProgram()
 { 
-	unsigned char str[20];
+	unsigned char str[MAX_PGM_LEN];
 	int i, ret;	
 	uint8_t program[MAX_PGM_LEN];
 	memset(program, 0, sizeof(program));

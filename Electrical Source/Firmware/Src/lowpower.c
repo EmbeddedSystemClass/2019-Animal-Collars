@@ -17,7 +17,7 @@ int LPM_sleep(void){
 	return 0;
 }
 int LPM_stop(void){
-	
+
 	GPS_GPSDisable();
 #ifdef __LARGE_COLLAR_	
 	VHF_DisableVHF();
@@ -30,19 +30,69 @@ int LPM_stop(void){
 	// Disable USART4:
 	USART4->CR1 &= ~USART_CR1_UE;
 	
+#ifdef __PRODUCTION_
+	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+	LL_APB1_GRP1_DisableClock(LL_APB1_GRP1_PERIPH_USART4);
+	//LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_SPI1);
+	LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_USART1);
 	
+	
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_DOWN;
+	
+	// USART1
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	// USART1
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_10;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	// USART4
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_10;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	// USART4
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	/*
+	// SPI
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	// SPI
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	// SPI
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_7;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);*/
+	
+	//GPIOA->ODR &= ~(LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_5| LL_GPIO_PIN_6| LL_GPIO_PIN_7| LL_GPIO_PIN_9 | LL_GPIO_PIN_10 );
+	GPIOA->ODR &= ~(LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_9 | LL_GPIO_PIN_10 );
+
+#endif
+ 
+	/* Clear any pending EXTI */
+	EXTI->PR = 0xFFFFFFFF;
+	/* Clear any pending peripheral interrupts */
+	int i;
+	for (i = 0; i < 8; i++) {
+			NVIC->ICPR[i] = 0xFFFFFFFF;
+	}
+	/* Clear the RTC pending flags */
+	RTC->ISR &= ~(RTC_ISR_ALRAF | RTC_ISR_ALRBF | RTC_ISR_WUTF | RTC_ISR_TSF | RTC_ISR_TAMP1F);
+
+
 	SCB->SCR |= SCR_DEEPSLEEP; 	// Enable deep sleep feature
 
 	PWR->CR  &= ~PWR_CR_PDDS;		// Enter Stop mode when Deepsleep is entered
 	PWR->CSR &= ~PWR_CSR_WUF;		// Clear wakup flag
+
 	
-#ifdef __PRODUCTION_	
-	__WFI();	// Wait for interrupt
+#ifdef __PRODUCTION_
+	__WFI();
 #endif	
 	
-	// Enable USART1:
-	USART1->CR1 |= USART_CR1_UE;
-	
+	LL_USART_Enable(USART1);
+
 	return 0;
 }
 int LPM_gpioInit(void){

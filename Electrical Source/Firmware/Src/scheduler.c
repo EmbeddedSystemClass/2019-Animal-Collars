@@ -17,6 +17,8 @@ void scheduler(int* GPS_active, int* XB_VHF_active){
 	int minCurTime  = 0;		// Current time in minutes
 	int minTimeBetw = 0;		// Time between in minutes
 	int difference  = 0;
+	int minVHFStartTime = 0;
+	int minVHFEndTime   = 0;
 	
 	LL_RTC_TimeTypeDef sTime;
 	LL_RTC_DateTypeDef sDate;
@@ -34,12 +36,20 @@ void scheduler(int* GPS_active, int* XB_VHF_active){
 	GPS_hoursBetween  = *(uint8_t *)(EEPROM_START + 3);
 	GPS_minutesBetween  = *(uint8_t *)(EEPROM_START + 4);
 	
-	// Update time & date
+		// Update time & date
 	RTC_getTimeDate( &sTime, &sDate);
+	
+	minCurTime  = (sTime.Hours * 60) + sTime.Minutes;							// Get the current time in minutes from 0-1439
+	minLastTime = (gps_lastHours * 60) + gps_lastMins;						// Get the last time the GPS was activated in minutes
+	minTimeBetw = (GPS_hoursBetween * 60) + GPS_minutesBetween;		// Get time between GPS fixes in minutes
+	difference = minCurTime - minLastTime;												// Get difference between the two
+	minVHFStartTime = VHF_startTime * 60;
+	minVHFEndTime = VHF_endTime * 60;
+	
 	
 	// Check VHF Active Period
 	if( (VHF_activeDay && (0x01 << sDate.WeekDay) ) != 0){
-		if( (sTime.Hours >= VHF_startTime) && (sTime.Hours < VHF_endTime) ){
+		if( (minCurTime >= minVHFStartTime) && (minCurTime <= minVHFEndTime) ){
 			*XB_VHF_active = 1;
 		}else{
 			*XB_VHF_active = 0;
@@ -48,25 +58,11 @@ void scheduler(int* GPS_active, int* XB_VHF_active){
 		*XB_VHF_active = 0;
 	};
 	
-	if( (sTime.Hours == 0x00) && (sTime.Minutes == 0) ){
-		*GPS_active = 1;
-		
-		gps_lastHours = sTime.Hours;
-		gps_lastMins  = sTime.Minutes;
-		FLASH_Unlock();
-		EEPROM_WriteByte(gps_lastHours, LASTHOUR_ADDR);
-		EEPROM_WriteByte(gps_lastMins, LASTMINS_ADDR);
-		FLASH_Lock();
-		
-	}
-	
-	minCurTime  = (sTime.Hours * 60) + sTime.Minutes;
-	minLastTime = (gps_lastHours * 60) + gps_lastMins;
-	minTimeBetw = (GPS_hoursBetween * 60) + GPS_minutesBetween;
-	difference = minCurTime - minLastTime;
+
+
 	
 	
-	if( *GPS_active == 0 && ( (difference >= minTimeBetw ) || (difference < 0) ) ){
+	if( (difference >= minTimeBetw ) || (difference < 0)  || ( (sTime.Hours == 0x00) && (sTime.Minutes == 0) ) ){
 							
 		*GPS_active = 1;
 		gps_lastHours = sTime.Hours;

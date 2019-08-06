@@ -23,6 +23,7 @@
 #define PUBX_POS_NUM_FIELDS	23
 #define GPS_RX_BUFF_SIZE	125
 #define ACC_TEMP_SIZE	4
+#define GPS_FIRST_FIX_CYCLES	4		// nNumber of times to try for time/date on first fix -- in multiples of 30s; 10 = 5 minutes of attempts
 
 
 #define SYNC_CHAR_1 0xB5

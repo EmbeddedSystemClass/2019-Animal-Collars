@@ -107,10 +107,10 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 // Uncomment to enable large collar features:
-//#define __LARGE_COLLAR_
+#define __LARGE_COLLAR_
 
 // Uncomment to enable production features:
- #define __PRODUCTION_
+#define __PRODUCTION_
 
 
 /* USER CODE END Private defines */
