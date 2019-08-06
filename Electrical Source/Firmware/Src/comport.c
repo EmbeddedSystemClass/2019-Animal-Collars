@@ -23,7 +23,6 @@
 //---------------------------------------------------
 int CC_ComPortPresent()
 {
-	
 #ifndef __PRODUCTION_
 		return 0;
 #endif	
@@ -279,7 +278,7 @@ int CC_SendTimestamp()
 //---------------------------------------------------
 int CC_SetProgram()
 { 
-	unsigned char str[20];
+	unsigned char str[MAX_PGM_LEN];
 	int i, ret;	
 	uint8_t program[MAX_PGM_LEN];
 	memset(program, 0, sizeof(program));
@@ -397,13 +396,17 @@ int CC_DownloadFixes()
 		CC_SendByte(',');
 
 		//Send Lat
-		CC_SendData(&buff[10], 10);
+		CC_SendData(&buff[10], 2);
+		CC_SendByte(',');
+		CC_SendData(&buff[12], 8);
 		CC_SendByte(',');		
 		CC_SendData(&buff[20], 1);
 		CC_SendByte(',');
 		
 		//Send Long
-		CC_SendData(&buff[21], 10);
+		CC_SendData(&buff[21], 3);
+		CC_SendByte(',');
+		CC_SendData(&buff[24], 7);
 		CC_SendByte(',');
 		CC_SendData(&buff[31], 1);
 		CC_SendByte(',');

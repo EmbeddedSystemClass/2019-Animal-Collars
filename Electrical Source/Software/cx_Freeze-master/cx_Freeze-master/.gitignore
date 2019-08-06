@@ -1,0 +1,8 @@
+build/
+dist/
+cx_Freeze.egg-info/
+MANIFEST
+output.log
+__pycache__
+*.pyc
+sample.xlsx

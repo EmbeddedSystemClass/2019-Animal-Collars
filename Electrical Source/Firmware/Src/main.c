@@ -6,13 +6,15 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * 
+	*	This is the main file for the 2019 GPS Wildlife Tracking Collar
+	*	
+	*	This code will wake up periodically to aquire GPS fixes, 
+	*	enable the VHF Beacon, and the Xbee radio.
+	*
+	*	The collar will go to a low power stop state while not active. 
+	*
+	*	Programming is done via USB from a PC based gui. The data can also be downloaded in this manner. 
   *
   ******************************************************************************
   */
@@ -55,6 +57,7 @@ int main(void)
   SystemClock_Config();
 	
 	__disable_irq();
+		
   // Initialize all configured peripherals 
   MX_GPIO_Init();
   MX_RTC_Init();
@@ -100,20 +103,27 @@ int main(void)
 	// These vars are used as flags for the scheduler
 	int GPS_active 	= 0;
 	int XB_VHF_active 	= 0;
+	
 
 #ifndef __PRODUCTION_
 	FLASH_Unlock();
-	EEPROM_WriteByte(0x0A, 0x08080004);
+	EEPROM_WriteByte(0x00, 0x08080003);
+	EEPROM_WriteByte(0x02, 0x08080004);
+	FLASH_initDataStorage();
 	FLASH_Lock();
 #endif
 	
 	//End of initialization, begin while loop
 	//------------------------------------------------------------------------------
   while (1)
-  {
-
+  {		
+		
 		//Check for com port connected (should be while to hold device in this state)
 		//----------------------------
+		if(CC_ComPortPresent()){
+			MX_USART1_UART_Init();
+			MX_USART4_UART_Init();
+		}
 		while(CC_ComPortPresent())
 		{
 			if( TIM2->SR & TIM_SR_UIF){
@@ -131,6 +141,8 @@ int main(void)
 				}//While present 
 			}//Check handshake
 		}//Comport present 
+		setLED(0);		// verify LED is off if no com port		
+		
 		//Logic low hall effect sensor, this means no mag is present
 		if( (MAG_SENSE_GPIO_Port->IDR & MAG_SENSE_Pin) != 0 )
 		{
@@ -140,26 +152,31 @@ int main(void)
 			}
 			if(GPS_active)
 			{
+				//MX_SPI1_Init();
 				GPS_subroutine();
 				GPS_active = 0;
 			}
 #ifdef __LARGE_COLLAR_			
 			if(XB_VHF_active)
 			{
+				MX_USART4_UART_Init();
+				//setLED(1);
 				XB_XbeeSubroutine();
 				VHF_EnableVHF();
-				//May need to set sleep mode in a way that it will not disable this reg
+				//setLED(0);
 			}
 			else
 			{
 				VHF_DisableVHF();
 			}
 #endif			
+			// Go to sleep until we the RTC wakes up:
+			LPM_stop();
 		}//Mag sense pin check
 		else
 		{
+			VHF_DisableVHF();
 			LPM_stop();
-			//__sleep() etc maybe ensure devices are disabled as well
 		}
 
   }

@@ -19,9 +19,9 @@
 #define PAGE_SZE 128 // in bytes
 #define DATA_LENGTH 32
 
-#define DATA_START_ADDR 	0x08005800  // Page 112
+#define DATA_START_ADDR 	0x08005900  // Page 178
 
-#define END_OF_MEMORY			0x08017F7F
+#define END_OF_MEMORY			0x08017FFF
 
 #define NEXTSTARTADDR_ADDR  0x08080014
 
@@ -36,6 +36,7 @@
 //	VHF_endTime					0x08080002
 //	GPS_hoursBetween		0x08080003
 // 	GPS_minutesBetween	0x08080004
+// 	GPS_req_acc					  
 //			----
 //  NEXTSTARTADDR_ADDR	0x08080014
 // 			----

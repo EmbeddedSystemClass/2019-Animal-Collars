@@ -31,7 +31,7 @@
 #define DOWNLOAD_N 9
 
 //Program data
-#define MAX_PGM_LEN 50
+#define MAX_PGM_LEN 10
 #define COMPORT_TIMEOUT 1000
 
 //Prototypes

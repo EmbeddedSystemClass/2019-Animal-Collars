@@ -156,6 +156,7 @@ void RTC_IRQHandler(void)
 		//------------------
 		// Reset the Alarm A flag in the RTC registers & the Pending Interrupt in EXTI
 		RTC->ISR &= ~RTC_ISR_ALRAF;
+		RTC->ISR &= ~RTC_ISR_WUTF;
 		EXTI->PR |= EXTI_PR_PIF17;
 	}
   /* USER CODE END RTC_IRQn 0 */
